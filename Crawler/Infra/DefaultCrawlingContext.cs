@@ -24,7 +24,8 @@ namespace Crawlers.Infra
 
         public T Get<T>(string key) where T : class
         {
-            Data.TryGetValue(key, out var result);
+            object result;
+            Data.TryGetValue(key, out result);
 
             return result as T;
         }

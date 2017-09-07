@@ -8,12 +8,13 @@ namespace Crawlers.Tabu
     {
         public async Task PurchaseAsync(IDictionary<string, string> queryString)
         {
-            queryString.TryGetValue("gush", out var gush);
-            queryString.TryGetValue("helka", out var helka);
-            queryString.TryGetValue("subHelka", out var subHelka);
-            queryString.TryGetValue("type", out var type);
-            queryString.TryGetValue("name", out var name);
-            queryString.TryGetValue("email", out var email);
+            string gush, helka, subHelka, type, name, email;
+            queryString.TryGetValue("gush", out gush);
+            queryString.TryGetValue("helka", out helka);
+            queryString.TryGetValue("subHelka", out subHelka);
+            queryString.TryGetValue("type", out type);
+            queryString.TryGetValue("name", out name);
+            queryString.TryGetValue("email", out email);
 
 
             var nesach = new NesachViewModel
