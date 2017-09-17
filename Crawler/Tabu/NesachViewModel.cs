@@ -1,6 +1,8 @@
-﻿namespace Crawlers.Tabu
+﻿using Crawlers.Infra;
+
+namespace Crawlers.Tabu
 {
-    public class NesachViewModel
+    public class NesachViewModel : IEcomDetails
     {
         public string Gush { get; set; }
         public string Helka { get; set; }

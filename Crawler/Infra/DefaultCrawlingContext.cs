@@ -5,8 +5,8 @@ namespace Crawlers.Infra
 {
     public class DefaultCrawlingContext : ICrawlingContext
     {
-        public HttpClientHandler HttpHandler { get; }
-        public HttpClient Client { get; }
+        public HttpClientHandler HttpHandler { get; set; }
+        public HttpClient Client { get; set; }
 
         private Dictionary<string, object> Data { get; }
 

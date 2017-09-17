@@ -22,5 +22,10 @@ namespace Crawlers.Infra
             context.Set("viewState", document.GetElementbyId("__VIEWSTATE")?.GetAttributeValue("value", null));
             context.Set("eventValidation", document.GetElementbyId("__EVENTVALIDATION")?.GetAttributeValue("value", null));
         }
+
+        public static Task PayOnEcom(string url, ICrawlingContext context, IEcomDetails details)
+        {
+            return new EcomPayer(url, context, details).Pay();
+        }
     }
 }

@@ -4,8 +4,8 @@ namespace Crawlers.Infra
 {
     public interface ICrawlingContext
     {
-        HttpClientHandler HttpHandler { get; }
-        HttpClient Client { get; }
+        HttpClientHandler HttpHandler { get; set; }
+        HttpClient Client { get; set; }
         void Set(string key, object value);
         T Get<T>(string key) where T : class;
     }
