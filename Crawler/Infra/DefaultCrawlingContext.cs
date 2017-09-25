@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 
 namespace Crawlers.Infra
@@ -7,6 +8,7 @@ namespace Crawlers.Infra
     {
         public HttpClientHandler HttpHandler { get; set; }
         public HttpClient Client { get; set; }
+        public object Result { get; set; }
 
         private Dictionary<string, object> Data { get; }
 
@@ -15,6 +17,7 @@ namespace Crawlers.Infra
             HttpHandler = new HttpClientHandler(); 
             Client = new HttpClient(HttpHandler);
             Data = new Dictionary<string, object>();
+            Result = "OK";
         }
 
         public void Set(string key, object value)

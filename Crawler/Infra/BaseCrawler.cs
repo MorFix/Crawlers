@@ -6,7 +6,7 @@ namespace Crawlers.Infra
 {
     public abstract class BaseCrawler
     {
-        protected ICrawlingContext Context { get; }
+        public ICrawlingContext Context { get; }
         protected IDictionary<int, ICrawlingStep> Steps { get; }
 
         protected BaseCrawler()

@@ -19,7 +19,7 @@ namespace ServerPool
             config.MessageHandlers.Add(new PasswordHandler(ConfigurationManager.AppSettings["password"]));
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(new InheritanceDirectRouteProvider());
         }
     }
 }

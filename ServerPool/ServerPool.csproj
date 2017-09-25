@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="ErrorContent.cs" />
     <Compile Include="MessageHandlers\PasswordHandler.cs" />
+    <Compile Include="Services\InheritanceDirectRouteProvider.cs" />
     <Compile Include="Services\RoutesLoader.cs" />
     <Compile Include="Filters\ExceptionsFilter.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

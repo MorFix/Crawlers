@@ -1,4 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -6,6 +9,11 @@ namespace Crawlers.Infra
 {
     public class CrawlingHelper
     {
+        public static Task<HtmlDocument> GetHtmlDocument(HttpClient client, Uri url)
+        {
+            return GetHtmlDocument(client, url.ToString());
+        }
+
         public static async Task<HtmlDocument> GetHtmlDocument(HttpClient client, string url)
         {
             var rawResponse = await client.GetAsync(url);
@@ -23,9 +31,21 @@ namespace Crawlers.Infra
             context.Set("eventValidation", document.GetElementbyId("__EVENTVALIDATION")?.GetAttributeValue("value", null));
         }
 
-        public static Task PayOnEcom(string url, ICrawlingContext context, IEcomDetails details)
+        public static string TryGetRedirectFile(Uri locationHeader)
         {
-            return new EcomPayer(url, context, details).Pay();
+            try
+            {
+                return locationHeader?.Segments.LastOrDefault();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public static IDictionary<string, string> GetQueryString(HttpRequestMessage request)
+        {
+            return request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
-using Newtonsoft.Json.Serialization;
 using Owin;
 
 namespace WebServer
@@ -14,7 +13,7 @@ namespace WebServer
             config.Formatters. JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             config.Services.Replace(typeof(IAssembliesResolver), new RoutesLoader());
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(new InheritanceDirectRouteProvider());
             config.Filters.Add(new ExceptionsFilter());
 
             config.EnsureInitialized();
