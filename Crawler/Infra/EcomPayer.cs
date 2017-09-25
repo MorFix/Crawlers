@@ -70,7 +70,6 @@ namespace Crawlers.Infra
                 new KeyValuePair<string, string>("rbReceipientType", "on"),
                 new KeyValuePair<string, string>("payerPhone", ""),
                 new KeyValuePair<string, string>("inputAutomaticCC", ""),
-                new KeyValuePair<string, string>("CvvNumberTextBox", ""),
                 new KeyValuePair<string, string>("CardOwnerNameTextbox", ""),
                 new KeyValuePair<string, string>("creditTextBox", ""),
                 new KeyValuePair<string, string>("sapakTextBox", ""),
@@ -84,8 +83,7 @@ namespace Crawlers.Infra
                 new KeyValuePair<string, string>("yearDropDown", ConfigurationManager.AppSettings["expirationYear"]),
                 new KeyValuePair<string, string>("monthDropDown", ConfigurationManager.AppSettings["expirationMonth"]),
                 new KeyValuePair<string, string>("IdNumberTextBox", ConfigurationManager.AppSettings["idNumber"]),
-
-
+                new KeyValuePair<string, string>("CvvNumberTextBox", ConfigurationManager.AppSettings["cvv"]),
             };
         }
     }

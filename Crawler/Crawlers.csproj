@@ -56,6 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompanyExtractor\CompanyViewModel.cs" />
+    <Compile Include="CompanyExtractor\Crawler\CompanyExtractorCrawler.cs" />
+    <Compile Include="CompanyExtractor\Crawler\Steps\CompanyExtractorEcomPay.cs" />
+    <Compile Include="CompanyExtractor\Crawler\Steps\CompanyExtractorSaveDetails.cs" />
+    <Compile Include="CompanyExtractor\Crawler\Steps\CompanyExtractorAddToBasket.cs" />
+    <Compile Include="CompanyExtractor\Crawler\Steps\CompanyExtractorSearch.cs" />
+    <Compile Include="CompanyExtractor\Crawler\Steps\CompanyExtractorSendRequest.cs" />
+    <Compile Include="CompanyExtractor\CompanyExtractorController.cs" />
+    <Compile Include="CompanyExtractor\CompanyExtractorLogic.cs" />
     <Compile Include="Infra\BaseCrawler.cs" />
     <Compile Include="Infra\CrawlingHelper.cs" />
     <Compile Include="Infra\DefaultCrawlingContext.cs" />
@@ -64,7 +73,6 @@
     <Compile Include="Infra\ICrawlingStep.cs" />
     <Compile Include="Infra\IEcomDetails.cs" />
     <Compile Include="Infra\ServicesFactory.cs" />
-    <Compile Include="Infra\IParser.cs" />
     <Compile Include="Pledges\PledgeOutputType.cs" />
     <Compile Include="Pledges\Crawler\PledgesCrawler.cs" />
     <Compile Include="Pledges\PledgeViewModel.cs" />
