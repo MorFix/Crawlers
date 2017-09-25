@@ -56,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrawlersImpl\FileExtractor\Crawler\FileExtractrCrawler.cs" />
+    <Compile Include="CrawlersImpl\FileExtractor\Crawler\Steps\FileExtractorFirstStep.cs" />
+    <Compile Include="CrawlersImpl\FileExtractor\FileExtractorController.cs" />
+    <Compile Include="CrawlersImpl\FileExtractor\FileExtractorLogic.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\CompanyViewModel.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\Crawler\CompanyExtractorCrawler.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\Crawler\Steps\CompanyExtractorEcomHandler.cs" />
@@ -66,6 +70,7 @@
     <Compile Include="CrawlersImpl\CompanyExtractor\Crawler\Steps\CompanyExtractorSendData.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\CompanyExtractorController.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\CompanyExtractorLogic.cs" />
+    <Compile Include="CrawlersImpl\FileExtractor\FileExtractorViewModel.cs" />
     <Compile Include="Infra\BaseCrawler.cs" />
     <Compile Include="Infra\BaseCrawlerController.cs" />
     <Compile Include="Infra\BaseCrawlerLogic.cs" />
@@ -101,5 +106,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
