@@ -66,6 +66,12 @@
     <Compile Include="CrawlersImpl\CompanyExtractor\Crawler\Steps\CompanyExtractorSendData.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\CompanyExtractorController.cs" />
     <Compile Include="CrawlersImpl\CompanyExtractor\CompanyExtractorLogic.cs" />
+    <Compile Include="CrawlersImpl\Pledges\Crawler\Steps\PledgesPostPay.cs" />
+    <Compile Include="CrawlersImpl\Pledges\Crawler\Steps\PledgesSetBaseData.cs" />
+    <Compile Include="CrawlersImpl\Pledges\Enums\PledgesAssetType.cs" />
+    <Compile Include="CrawlersImpl\Pledges\Enums\PledgeViewType.cs" />
+    <Compile Include="CrawlersImpl\Pledges\Enums\PledgeOwnerType.cs" />
+    <Compile Include="CrawlersImpl\Pledges\PledgesHelper.cs" />
     <Compile Include="Infra\BaseCrawler.cs" />
     <Compile Include="Infra\BaseCrawlerController.cs" />
     <Compile Include="Infra\BaseCrawlerLogic.cs" />
@@ -79,7 +85,7 @@
     <Compile Include="Infra\Ecom\BaseViewModel.cs" />
     <Compile Include="Infra\ServicesFactory.cs" />
     <Compile Include="CrawlersImpl\Pledges\Crawler\Steps\PledgesEcomHandler.cs" />
-    <Compile Include="CrawlersImpl\Pledges\PledgeOutputType.cs" />
+    <Compile Include="CrawlersImpl\Pledges\Enums\PledgeOutputType.cs" />
     <Compile Include="CrawlersImpl\Pledges\Crawler\PledgesCrawler.cs" />
     <Compile Include="CrawlersImpl\Pledges\PledgeViewModel.cs" />
     <Compile Include="CrawlersImpl\Pledges\Crawler\Steps\PledgesAddToBasket.cs" />

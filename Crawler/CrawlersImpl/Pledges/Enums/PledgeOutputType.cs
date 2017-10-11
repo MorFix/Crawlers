@@ -1,8 +1,8 @@
-﻿namespace Crawlers.CrawlersImpl.Pledges
+﻿namespace Crawlers.CrawlersImpl.Pledges.Enums
 {
     public enum PledgeOutputType
     {
         Active = 1,
-        Canceled = 2
+        Canceled
     }
 }

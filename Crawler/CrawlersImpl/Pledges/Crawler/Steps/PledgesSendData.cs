@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Crawlers.Infra;
@@ -21,7 +20,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
         {
             const string errorsKey = "Errors";
 
-            var formData = BuildFormData(context);
+            var formData = BuildFormData(context.Get<JObject>("responseModel"));
 
             var response =
                 await context.Client.PostAsync("/Search/PledgeBrowsePayment", new FormUrlEncodedContent(formData));
@@ -35,12 +34,12 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
             context.Set("guidKey", responseObject["inputStr"].Value<string>());
         }
 
-        private IEnumerable<KeyValuePair<string, string>> BuildFormData(ICrawlingContext context)
+        private IEnumerable<KeyValuePair<string, string>> BuildFormData(JObject model)
         {
             return new[]
             {
                 new KeyValuePair<string, string>("IsGetResultsDelayed", "0"),
-                new KeyValuePair<string, string>("ByType", "1"),
+                new KeyValuePair<string, string>("ByType", ""),
                 new KeyValuePair<string, string>("OwnerType", ""),
                 new KeyValuePair<string, string>("IdNum", ""),
                 new KeyValuePair<string, string>("IdNumRequired", ""),
@@ -55,7 +54,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
                 new KeyValuePair<string, string>("BankNameString", ""),
                 new KeyValuePair<string, string>("UnsignedCorporationId_input", ""),
                 new KeyValuePair<string, string>("UnsignedCorporationId", ""),
-                new KeyValuePair<string, string>("UnsignedCorporationName", ""),
+                new KeyValuePair<string, string>("UnsignedCorporationName", ""), // שם תאגיד עפי חוק
                 new KeyValuePair<string, string>("CorporationName", ""),
                 new KeyValuePair<string, string>("LastNameForeign", ""),
                 new KeyValuePair<string, string>("FirstNameForeign", ""),
@@ -74,17 +73,17 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
                 new KeyValuePair<string, string>("FirstName", ""),
                 new KeyValuePair<string, string>("BrowseTollRate", "10.00"),
 
-
+                // Actual Data
                 new KeyValuePair<string, string>("SearchDetailsList[0].ID", ""),
-                // new KeyValuePair<string, string>("SearchDetailsList[0].OutputTypeString", "משכונות פעילים"),
-                new KeyValuePair<string, string>("SearchDetailsList[0].RequestBy", "חייב"),
-                new KeyValuePair<string, string>("SearchDetailsList[0].RequestIdentification", "ח.פ. " + Pledge.CompanyId),
-                new KeyValuePair<string, string>("SearchDetailsList[0].ResultDisplayModeString", "מיידי"),
-                new KeyValuePair<string, string>("SearchDetailsList[0].BrowseTollRate", "10"),
-                new KeyValuePair<string, string>("SearchDetailsList[0].ByType", "1"),
-                new KeyValuePair<string, string>("SearchDetailsList[0].OwnerType", "3"),
-                new KeyValuePair<string, string>("SearchDetailsList[0].IdNum", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].IdNumRequired", Pledge.CompanyId),
+                new KeyValuePair<string, string>("SearchDetailsList[0].OutputTypeString", model["OutputTypeString"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].RequestBy", model["RequestBy"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].RequestIdentification", model["RequestIdentification"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].ResultDisplayModeString", model["ResultDisplayModeString"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].BrowseTollRate", model["BrowseTollRate"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].ByType", model["ByType"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].OwnerType", model["OwnerType"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].IdNum", model["IdNum"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].IdNumRequired", model["IdNumRequired"].Value<string>()),
                 new KeyValuePair<string, string>("SearchDetailsList[0].IdForeignResident", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].LastName", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].FirstName", ""),
@@ -94,33 +93,38 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
                 new KeyValuePair<string, string>("SearchDetailsList[0].FirstNameEnglish", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].CountryId", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].CountryName", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].CorporationName", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].CorporationNameValue", context.Get<string>("companyName")),
+                new KeyValuePair<string, string>("SearchDetailsList[0].CorporationName", model["CorporationName"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].CorporationNameValue", model["CorporationNameValue"].Value<string>()),
                 new KeyValuePair<string, string>("SearchDetailsList[0].UnsignedCorporationId", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].UnsignedCorporationName", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].BankId", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].BankNameString", ""),
+                new KeyValuePair<string, string>("SearchDetailsList[0].BankId", model["BankId"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].BankNameString", model["BankNameString"].Value<string>()),
                 new KeyValuePair<string, string>("SearchDetailsList[0].ForeignCorporationName", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].OutputType", ((int) Pledge.OutputType).ToString()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].OutputType", model["OutputType"].Value<string>()),
                 new KeyValuePair<string, string>("SearchDetailsList[0].CheckBefore1995", "false"),
                 new KeyValuePair<string, string>("SearchDetailsList[0].CheckBefore1995Id", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].ResultDisplayMode", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].Asset", ""),
-                new KeyValuePair<string, string>("SearchDetailsList[0].LicenseNum", ""),
+                new KeyValuePair<string, string>("SearchDetailsList[0].Asset", model["Asset"].Value<string>()),
+                new KeyValuePair<string, string>("SearchDetailsList[0].LicenseNum", model["LicenseNum"].Value<string>()),
                 new KeyValuePair<string, string>("SearchDetailsList[0].PledgeNum", ""),
                 new KeyValuePair<string, string>("SearchDetailsList[0].State", "0"),
+
                 new KeyValuePair<string, string>("KodAgra", "168"),
                 new KeyValuePair<string, string>("TollSum", "10.00"),
                 new KeyValuePair<string, string>("Sum", "0"),
                 new KeyValuePair<string, string>("TollRate", "10.00"),
                 new KeyValuePair<string, string>("IsExempt", "False"),
                 new KeyValuePair<string, string>("ContactIdPermitted", "0"),
-                new KeyValuePair<string, string>("ConnectionDetails.RequestSubmitName", Pledge.Name ?? ConfigurationManager.AppSettings["name"]),
+
+                // Connection Details - address type Email
+                new KeyValuePair<string, string>("ConnectionDetails.AddressType", "ByEmail"),
+                new KeyValuePair<string, string>("ConnectionDetails.RequestSubmitName", Pledge.Name),
+                new KeyValuePair<string, string>("ConnectionDetails.Email", Pledge.Email),
                 new KeyValuePair<string, string>("ConnectionDetails.TelephoneNumber", "5555555"),
                 new KeyValuePair<string, string>("ConnectionDetails.DiallingAreaNumber_input", "055"),
                 new KeyValuePair<string, string>("ConnectionDetails.DiallingAreaNumber", "55"),
-                new KeyValuePair<string, string>("ConnectionDetails.Email", Pledge.Email ?? ConfigurationManager.AppSettings["email"]),
-                new KeyValuePair<string, string>("ConnectionDetails.AddressType", "ByEmail"),
+                
+                // Other addresses types
                 new KeyValuePair<string, string>("ConnectionDetails.CityId_input", ""),
                 new KeyValuePair<string, string>("ConnectionDetails.CityId", ""),
                 new KeyValuePair<string, string>("ConnectionDetails.StreetId_input", ""),
@@ -140,8 +144,9 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
                 new KeyValuePair<string, string>("ConnectionDetails.With", ""),
                 new KeyValuePair<string, string>("ConnectionDetails.DistrictSelect_input", ""),
                 new KeyValuePair<string, string>("ConnectionDetails.DistrictSelect", ""),
+
+                // Metadata
                 new KeyValuePair<string, string>("ConnectionDetails.ReadTermsOfUse", "true"),
-                new KeyValuePair<string, string>("ConnectionDetails.ReadTermsOfUse", "false"),
                 new KeyValuePair<string, string>("ObjectState", "true"),
             };
         }

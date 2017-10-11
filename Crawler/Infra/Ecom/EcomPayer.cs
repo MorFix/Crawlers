@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -56,8 +55,8 @@ namespace Crawlers.Infra.Ecom
                 new KeyValuePair<string, string>("payImg2.x", "681"),
                 new KeyValuePair<string, string>("payImg2.y", "430"),
 
-                new KeyValuePair<string, string>("receiptName", ViewModel.Name ?? ConfigurationManager.AppSettings["name"]),
-                new KeyValuePair<string, string>("receiptEmail", ViewModel.Email ?? ConfigurationManager.AppSettings["email"]),
+                new KeyValuePair<string, string>("receiptName", ViewModel.Name),
+                new KeyValuePair<string, string>("receiptEmail", ViewModel.Email),
                 new KeyValuePair<string, string>("cardNumberTextBox", ConfigurationManager.AppSettings["cardNumber"]),
                 new KeyValuePair<string, string>("yearDropDown", ConfigurationManager.AppSettings["expirationYear"]),
                 new KeyValuePair<string, string>("monthDropDown", ConfigurationManager.AppSettings["expirationMonth"]),
@@ -69,7 +68,6 @@ namespace Crawlers.Infra.Ecom
         private async Task EnsureRedirectFile(HttpResponseMessage response)
         {
             var redirectFile = CrawlingHelper.TryGetRedirectFile(response.Headers.Location);
-
             if (redirectFile == null)
             {
                 TryJsRedirect(await response.Content.ReadAsStreamAsync());
@@ -90,7 +88,9 @@ namespace Crawlers.Infra.Ecom
 
             var nodes = doc.DocumentNode.Descendants().ToList();
             var form = nodes.FirstOrDefault(x => x.Name == "form");
-            if (form == null)
+
+            var actionUrl = form?.GetAttributeValue("action", null);
+            if (actionUrl == null || actionUrl.StartsWith("Payment.aspx"))
             {
                 throw new Exception("Unknown error - Check your configuration");
             }

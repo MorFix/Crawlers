@@ -16,10 +16,8 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
 
         public async Task Execute(ICrawlingContext context)
         {
-            context.Client.BaseAddress = new Uri("https://pledges.justice.gov.il");
-            context.HttpHandler.AllowAutoRedirect = false;
-
-            var companyExistsResponse = await context.Client.GetAsync(string.Format("/Search/GetIsraeliCorporation?companyNumber={0}&owner=3", Pledge.CompanyId));
+            var companyExistsResponse = await context.Client.GetAsync(
+                $"/Search/GetIsraeliCorporation?companyNumber={Pledge.Id}&owner={(int) Pledge.OwnerType}");
 
             var jsonResponse = JObject.Parse(await companyExistsResponse.Content.ReadAsStringAsync());
             if (!jsonResponse["valid"].Value<bool>())
@@ -27,7 +25,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
                 throw new Exception("Company not found");
             }
 
-            context.Set("companyName", jsonResponse["corporationName"].Value<string>());
+            context.Set("corporationName", jsonResponse["corporationName"].Value<string>());
         }
     }
 }

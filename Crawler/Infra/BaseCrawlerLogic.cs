@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Crawlers.Infra.Ecom;
@@ -13,14 +14,13 @@ namespace Crawlers.Infra
 
         protected virtual TViewModel CreateViewModel(IDictionary<string, string> parameters)
         {
-            string name, email;
-            parameters.TryGetValue("name", out name);
-            parameters.TryGetValue("email", out email);
+            parameters.TryGetValue("name", out var name);
+            parameters.TryGetValue("email", out var email);
 
             return new TViewModel
             {
-                Name = !string.IsNullOrWhiteSpace(name) ? name : null,
-                Email = !string.IsNullOrWhiteSpace(email) ? email : null
+                Name = !string.IsNullOrWhiteSpace(name) ? name : ConfigurationManager.AppSettings["name"],
+                Email = !string.IsNullOrWhiteSpace(email) ? email : ConfigurationManager.AppSettings["email"]
             };
         }
 

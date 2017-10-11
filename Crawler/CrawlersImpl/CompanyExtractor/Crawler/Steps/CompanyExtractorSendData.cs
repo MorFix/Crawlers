@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Crawlers.Infra;
@@ -28,7 +27,7 @@ namespace Crawlers.CrawlersImpl.CompanyExtractor.Crawler.Steps
         {
             return new[]
             {
-                new KeyValuePair<string, string>("ConnectDetailsViewModel.Email", Company.Email ?? ConfigurationManager.AppSettings["email"]),
+                new KeyValuePair<string, string>("ConnectDetailsViewModel.Email", Company.Email),
                 new KeyValuePair<string, string>("ConnectDetailsViewModel.ConfirmWebsiteConditions", "true"),
                 new KeyValuePair<string, string>("SaveUrl", "/CompanyExtract/SaveConnectDetails"),
                 new KeyValuePair<string, string>("SaveAnyWay", "False"),
