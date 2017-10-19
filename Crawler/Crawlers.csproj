@@ -77,6 +77,7 @@
     <Compile Include="Infra\BaseCrawlerLogic.cs" />
     <Compile Include="Infra\CrawlingHelper.cs" />
     <Compile Include="Infra\DefaultCrawlingContext.cs" />
+    <Compile Include="Infra\EcomDocumentHelper.cs" />
     <Compile Include="Infra\Ecom\EcomHandler.cs" />
     <Compile Include="Infra\Ecom\EcomPayer.cs" />
     <Compile Include="Infra\Ecom\EcomRedirector.cs" />

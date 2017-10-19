@@ -29,6 +29,7 @@ namespace Crawlers.Infra
         {
             context.Set("viewState", document.GetElementbyId("__VIEWSTATE")?.GetAttributeValue("value", null));
             context.Set("eventValidation", document.GetElementbyId("__EVENTVALIDATION")?.GetAttributeValue("value", null));
+            context.Set("viewStateGenerator", document.GetElementbyId("__VIEWSTATEGENERATOR")?.GetAttributeValue("value", null));
         }
 
         public static string TryGetRedirectFile(Uri locationHeader)
@@ -46,6 +47,11 @@ namespace Crawlers.Infra
         public static IDictionary<string, string> GetQueryString(HttpRequestMessage request)
         {
             return request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public static string ExtractEncryptionString(HtmlDocument doc)
+        {
+            return doc.DocumentNode.Descendants().FirstOrDefault(x => x.Name == "enc_string")?.GetAttributeValue("value", null);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Crawlers.CrawlersImpl.CompanyExtractor.Crawler.Steps
                 Query = "companyExtract=true&fileName=" + fileId
             };
 
-            context.Result = $"<a href='{downloadLink}'>{downloadLink}</a>";
+            context.Result = $"<a href='{downloadLink}'>Download Link</a>";
         }
 
         private FormUrlEncodedContent GetQueryString(ICrawlingContext context)

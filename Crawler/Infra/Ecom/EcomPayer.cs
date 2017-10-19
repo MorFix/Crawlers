@@ -79,26 +79,24 @@ namespace Crawlers.Infra.Ecom
             {
                 throw new Exception("Payment was unsuccessful");
             }
+
+            Context.Set("downloadPath", response.Headers.Location);
         }
 
         private void TryJsRedirect(Stream content)
         {
             var doc = new HtmlDocument();
             doc.Load(content);
+            var docHelper = new EcomDocumentHelper(doc);
 
-            var nodes = doc.DocumentNode.Descendants().ToList();
-            var form = nodes.FirstOrDefault(x => x.Name == "form");
-
-            var actionUrl = form?.GetAttributeValue("action", null);
+            var actionUrl = docHelper.GetFirstFormAction();
             if (actionUrl == null || actionUrl.StartsWith("Payment.aspx"))
             {
                 throw new Exception("Unknown error - Check your configuration");
             }
 
-            var action = new Uri(form.GetAttributeValue("action", null));
-
-            Context.Set("downloadPath", new Uri(action.LocalPath, UriKind.Relative));
-            Context.Set("encryptionString", nodes.FirstOrDefault(x => x.Name == "input")?.GetAttributeValue("value", null));
+            Context.Set("downloadPath", new Uri(new Uri(actionUrl).LocalPath, UriKind.Relative));
+            Context.Set("encryptionString", docHelper.GetEncryptionString());
         }
     }
 }
