@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Crawlers.Infra;
+using HtmlAgilityPack;
 
 namespace Crawlers.CrawlersImpl.Tabu.Crawler.Steps
 {
@@ -21,11 +24,13 @@ namespace Crawlers.CrawlersImpl.Tabu.Crawler.Steps
         {
             var response = await context.Client.PostAsync(Url, new FormUrlEncodedContent(BuildFormData(context)));
 
-            EnsureRedirectFile(CrawlingHelper.TryGetRedirectFile(response.Headers.Location));
+            await EnsureRedirectFile(response.Headers.Location, context);
         }
 
-        private void EnsureRedirectFile(string redirectFile)
+        private async Task EnsureRedirectFile(Uri location, ICrawlingContext context)
         {
+            var redirectFile = CrawlingHelper.TryGetRedirectFile(location);
+
             if (redirectFile == null)
             {
                 throw new Exception("Unknown error");
@@ -33,8 +38,37 @@ namespace Crawlers.CrawlersImpl.Tabu.Crawler.Steps
 
             if (!redirectFile.Equals("DetailedBasket.aspx"))
             {
-                throw new Exception("No match found");
+                var doc = await CrawlingHelper.GetHtmlDocument(context.Client, location);
+                var errorString = GetEcomError(doc) ?? "No match found";
+                
+                throw new Exception(errorString);
             }
+        }
+
+        private string GetEcomError(HtmlDocument ecomResponse)
+        {
+            try
+            {
+                var td = GetErrorTd(ecomResponse);
+
+                td.ChildNodes[1].Remove();
+
+                return td.InnerText;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        private HtmlNode GetErrorTd(HtmlDocument doc)
+        {
+            return doc.GetElementbyId("backbutton").ParentNode
+                                                   .ChildNodes[1]
+                                                   .ChildNodes[1]
+                                                   .ChildNodes[1]
+                                                   .ChildNodes[3]
+                                                   .ChildNodes[1];
         }
 
         private IEnumerable<KeyValuePair<string, string>> BuildFormData(ICrawlingContext context)
