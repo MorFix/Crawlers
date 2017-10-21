@@ -13,13 +13,13 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
         {
             var selfSendResponse = await GetSelfSendResponseDocument(context);
             var docHelper = new EcomDocumentHelper(selfSendResponse);
+            var path = docHelper.GetFirstFormAction();
 
-            using (var content = GetRedirectQueryString(docHelper.GetFirstFormAction(), docHelper.GetEncryptionString()))
+            using (var content = GetRedirectQueryString(path, docHelper.GetEncryptionString()))
             {
-                var strContent = await content.ReadAsStringAsync();
-                var path = context.Get<Uri>("downloadPath");
+                var queryString = await content.ReadAsStringAsync();
 
-                context.Result = $"<a href='{path}?{strContent}'>Link to file</a>";
+                context.Result = $"<a href='{path}?{queryString}'>Link to file</a>";
             }
         }
 
