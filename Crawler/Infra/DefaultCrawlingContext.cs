@@ -14,8 +14,11 @@ namespace Crawlers.Infra
 
         public DefaultCrawlingContext()
         {
-            HttpHandler = new HttpClientHandler(); 
+            HttpHandler = new HttpClientHandler();
+
             Client = new HttpClient(HttpHandler);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
             Data = new Dictionary<string, object>();
             Result = "OK";
         }
