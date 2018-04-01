@@ -23,7 +23,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
             var formData = BuildFormData(context.Get<JObject>("responseModel"));
 
             var response =
-                await context.Client.PostAsync("/Search/PledgeBrowsePayment", new FormUrlEncodedContent(formData));
+                await context.Client.PostAsync("/SearchPledge/PledgeBrowsePayment", new FormUrlEncodedContent(formData));
 
             var responseObject = JObject.Parse(await response.Content.ReadAsStringAsync());
             if (responseObject[errorsKey].HasValues)

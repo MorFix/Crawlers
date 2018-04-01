@@ -21,6 +21,8 @@ namespace Crawlers.Infra
 
             Data = new Dictionary<string, object>();
             Result = "OK";
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
         }
 
         public void Set(string key, object value)

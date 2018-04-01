@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using Crawlers.CrawlersImpl.Pledges.Enums;
 using Crawlers.Infra;
 using Newtonsoft.Json.Linq;
 
@@ -22,17 +22,17 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
         {
             var payload = BuildPayload(context);
             var content = new StringContent(payload.ToString(), Encoding.UTF8, "application/json");
+            var response = await context.Client.PostAsync("/SearchPledge/AddPledgeDetails", content);
 
-            var response = await context.Client.PostAsync("/Search/AddPledgeDetails", content);
-            var addToBasketResponse = JObject.Parse(await response.Content.ReadAsStringAsync());
+            var addToBasketJsonResponse = JObject.Parse(await response.Content.ReadAsStringAsync());
 
-            var error = addToBasketResponse["Errors"].Value<JArray>().FirstOrDefault();
+            var error = addToBasketJsonResponse["Errors"].Value<JArray>().FirstOrDefault();
             if (error != null)
             {
                 throw new Exception(error["ErrorMessage"].Value<string>());
             }
 
-            context.Set("responseModel", addToBasketResponse["Model"].Value<JObject>());
+            context.Set("responseModel", addToBasketJsonResponse["Data"]["BrowseRequestGrid"].Value<JObject>());
         }
 
         private JObject BuildPayload(ICrawlingContext context)
@@ -66,6 +66,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
                 ["LastNameEnglish"] = "",
                 ["LastNameForeign"] = "",
                 ["LicenseNum"] = Pledge.LicenseNumber,
+                ["List"] = new JObject(),
                 ["OutputType"] = (int) Pledge.OutputType,
                 ["OwnerType"] = (int) Pledge.OwnerType,
                 ["PledgeNum"] = "",

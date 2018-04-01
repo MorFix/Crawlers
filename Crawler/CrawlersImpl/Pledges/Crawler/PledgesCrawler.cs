@@ -1,4 +1,5 @@
-﻿using Crawlers.Infra;
+﻿using System.Net;
+using Crawlers.Infra;
 using Crawlers.CrawlersImpl.Pledges.Crawler.Steps;
 using Crawlers.CrawlersImpl.Pledges.Enums;
 
