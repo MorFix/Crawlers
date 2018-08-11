@@ -8,12 +8,20 @@ namespace ServerPool.Services
 {
     public class RoutesLoader : DefaultAssembliesResolver
     {
+        public static ICollection<Assembly> AllAssemblies = GetCustomAssemblies();
+
         public override ICollection<Assembly> GetAssemblies()
+        {
+            AllAssemblies = base.GetAssemblies().Concat(GetCustomAssemblies()).ToList();
+
+            return AllAssemblies;
+        }
+
+        private static ICollection<Assembly> GetCustomAssemblies()
         {
             return (ConfigurationManager.AppSettings["routingAssemblies"] ?? string.Empty).Split(',')
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(Assembly.LoadFrom)
-                .Concat(base.GetAssemblies())
                 .ToList();
         }
     }
