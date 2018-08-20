@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Http.Dispatcher;
 
-namespace ServerPool.Services
+namespace ServerCore
 {
     public class RoutesLoader : DefaultAssembliesResolver
     {

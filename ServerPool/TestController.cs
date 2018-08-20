@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ServerPool.Services;
+using ServerCore;
 
 namespace ServerPool
 {

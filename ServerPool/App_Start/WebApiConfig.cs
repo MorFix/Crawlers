@@ -4,7 +4,7 @@ using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using ServerPool.Filters;
 using ServerPool.MessageHandlers;
-using ServerPool.Services;
+using ServerCore;
 
 namespace ServerPool
 {

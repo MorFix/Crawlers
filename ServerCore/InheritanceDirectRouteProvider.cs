@@ -2,7 +2,7 @@
 using System.Web.Http.Controllers;
 using System.Web.Http.Routing;
 
-namespace ServerPool.Services
+namespace ServerCore
 {
     public class InheritanceDirectRouteProvider : DefaultDirectRouteProvider
     {
