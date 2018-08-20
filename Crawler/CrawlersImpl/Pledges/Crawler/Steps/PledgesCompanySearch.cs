@@ -17,7 +17,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
         public async Task Execute(ICrawlingContext context)
         {
             var companyExistsResponse = await context.Client.GetAsync(
-                $"/Search/GetIsraeliCorporation?companyNumber={Pledge.Id}&owner={(int) Pledge.OwnerType}");
+                $"/SearchPledge/GetIsraeliCorporation?companyNumber={Pledge.Id}&owner={(int) Pledge.OwnerType}");
 
             var jsonResponse = JObject.Parse(await companyExistsResponse.Content.ReadAsStringAsync());
             if (!jsonResponse["valid"].Value<bool>())
