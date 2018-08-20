@@ -8,7 +8,7 @@ namespace ServerCore
 {
     public class RoutesLoader : DefaultAssembliesResolver
     {
-        public static ICollection<Assembly> AllAssemblies = GetCustomAssemblies();
+        public static ICollection<Assembly> AllAssemblies;
 
         public override ICollection<Assembly> GetAssemblies()
         {
