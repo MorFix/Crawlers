@@ -2,9 +2,8 @@
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using ServerCore;
 
-namespace ServerPool
+namespace ServerCore
 {
     [RoutePrefix("test")]
     public class TestController : ApiController
