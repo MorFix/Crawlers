@@ -28,7 +28,11 @@ namespace Crawlers.Infra.Ecom
             CrawlingHelper.SetEventParams(Context, doc);
 
             var hidStepGuid = doc.GetElementbyId("hidStepGuid")?.GetAttributeValue("value", null);
-            var response = await Context.Client.PostAsync(PaymentUrl, new FormUrlEncodedContent(BuildFormData(hidStepGuid)));
+
+            // This var is here for changing at runtime when debugging
+            var formData = BuildFormData(hidStepGuid);
+
+            var response = await Context.Client.PostAsync(PaymentUrl, new FormUrlEncodedContent(formData));
 
             await EnsureRedirectFile(response);
         }

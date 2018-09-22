@@ -20,11 +20,12 @@ namespace Crawlers.CrawlersImpl.Tabu
             parameters.TryGetValue("helka", out helka);
             parameters.TryGetValue("subHelka", out subHelka);
             parameters.TryGetValue("type", out type);
-
+            
             nesach.Gush = gush;
             nesach.Helka = helka;
             nesach.SubHelka = subHelka;
             nesach.Type = (NesachType) int.Parse(type ?? "0");
+            nesach.IsDownloadable = parameters.ContainsKey("download");
 
             return nesach;
         }

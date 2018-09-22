@@ -8,6 +8,7 @@ namespace Crawlers.CrawlersImpl.Tabu
         public string Helka { get; set; }
         public string SubHelka { get; set; }
         public NesachType Type { get; set; }
+        public bool IsDownloadable { get; set; }
 
         public NesachViewModel()
         {
