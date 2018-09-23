@@ -29,7 +29,7 @@ namespace ServerCore
 
         private IEnumerable<string> GetControllers(Assembly asm)
         {
-            return asm.GetTypes().Where(x => typeof(ApiController).IsAssignableFrom(x)).Select(x => x.Name);
+            return asm.GetTypes().Where(x => typeof(ApiController).IsAssignableFrom(x) && !x.IsAbstract).Select(x => x.Name);
         }
     }
 }
