@@ -32,7 +32,7 @@ namespace Crawlers.Infra.Ecom
             // This var is here for changing at runtime when debugging
             var formData = BuildFormData(hidStepGuid);
 
-            var response = await Context.Client.PostAsync(PaymentUrl, new FormUrlEncodedContent(formData));
+            var response = await Context.Client.PostAsync(PaymentUrl, new CustomFormUrlEncodedContent(formData));
 
             await EnsureRedirectFile(response);
         }

@@ -21,8 +21,8 @@ namespace Crawlers.CrawlersImpl.Tabu.Crawler.Steps
         }
 
         public async Task Execute(ICrawlingContext context)
-        {
-            var response = await context.Client.PostAsync(Url, new FormUrlEncodedContent(BuildFormData(context)));
+        {           
+            var response = await context.Client.PostAsync(Url, new CustomFormUrlEncodedContent(BuildFormData(context)));
 
             await EnsureRedirectFile(response.Headers.Location, context);
         }

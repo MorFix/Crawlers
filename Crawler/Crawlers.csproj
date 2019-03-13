@@ -82,6 +82,7 @@
     <Compile Include="Infra\BaseCrawlerController.cs" />
     <Compile Include="Infra\BaseCrawlerLogic.cs" />
     <Compile Include="Infra\CrawlingHelper.cs" />
+    <Compile Include="Infra\CustomFormUrlEncodedContent.cs" />
     <Compile Include="Infra\DefaultCrawlingContext.cs" />
     <Compile Include="Infra\EcomDocumentHelper.cs" />
     <Compile Include="Infra\Ecom\EcomHandler.cs" />

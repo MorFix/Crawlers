@@ -40,7 +40,7 @@ namespace Crawlers.CrawlersImpl.Pledges.Crawler.Steps
 
         private HttpContent CreateSelfSendContent(ICrawlingContext context)
         {
-            return new FormUrlEncodedContent(new []
+            return new CustomFormUrlEncodedContent(new []
             {
                 new KeyValuePair<string, string>("__VIEWSTATE", context.Get<string>("viewState")),
                 new KeyValuePair<string, string>("__EVENTVALIDATION", context.Get<string>("eventValidation")),
